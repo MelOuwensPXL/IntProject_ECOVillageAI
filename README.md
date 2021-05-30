@@ -1,2 +1,3 @@
 # IntProject_ECOVillageAI
-A code repository for the ECO village Air quality AI project
+The project with ECO-Village in Boekel of Netherland. 
+Applied Python Modeling of Data. 
