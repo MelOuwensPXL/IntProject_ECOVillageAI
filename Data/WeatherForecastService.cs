@@ -1,5 +1,8 @@
+using Blazor1.Pages;
 using System;
+using System.Collections;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Blazor1.Data
@@ -22,12 +25,75 @@ namespace Blazor1.Data
             {
                 Date = startDate.AddDays(index),
                 TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            }).ToArray());
+               
+                Summary = Summary(Summaries, TemperatureC)[counter].ToString(),
+                 counter = counter + 1
+
+            }).ToArray()); 
+
+            
 
             TempretureInfo temp = new TempretureInfo();
             temp.Settsk(tsk);
             return tsk;
+
+
+
+           
         }
+        public ArrayList Summary(string[] Summaries,int moc_temp)
+        {
+            ArrayList ActualSummaries = new ArrayList();
+
+            foreach (var item in Summaries)
+            {
+                if ((moc_temp<0) && (moc_temp > -10))
+                {
+                    ActualSummaries.Add("Bracing");
+                }
+                else
+                {
+                    if (moc_temp<-10)
+                    {
+                        ActualSummaries.Add("Freezing");
+                    }
+                    else
+                    {
+                        if ((moc_temp>20) && (moc_temp<30))
+                        {
+                            ActualSummaries.Add("Warm");
+                        }
+                        else
+                        {
+                            if ((moc_temp > 30) && (moc_temp < 35))
+                            {
+                                ActualSummaries.Add("Hot");
+                            }
+                            else
+                            {
+                                if ((moc_temp > 35) && (moc_temp < 40))
+                                {
+                                    ActualSummaries.Add("Sweltering");
+                                }
+                                else
+                                {
+                                    if ((moc_temp>40))
+                                    {
+                                        ActualSummaries.Add("Scorching");
+                                    }
+                                    else
+                                    {
+                                        ActualSummaries.Add("Mild");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return ActualSummaries;
+            
+        }
+
     }
 }

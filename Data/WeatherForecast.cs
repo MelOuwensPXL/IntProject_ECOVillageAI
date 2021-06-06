@@ -4,6 +4,8 @@ namespace Blazor1.Data
 {
     public class WeatherForecast
     {
+        internal int counter = 0;
+
         public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }

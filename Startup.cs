@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Radzen;
+using Radzen.Blazor;
+using MudBlazor.Services;
 
 namespace Blazor1
 {
@@ -31,6 +34,9 @@ namespace Blazor1
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<HttpClient>();
+            services.AddMudServices();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

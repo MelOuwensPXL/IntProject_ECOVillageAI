@@ -38,7 +38,7 @@ function GenerateBars(datatodisplay, labelstodisplay)
             labels: labelstodisplay, datasetElementType: null,
             datasets: [{
                 label: 'Temp',
-                data: dtd,
+                data: datatodisplay,
                 backgroundColor:[ 'rgba(255,99,132,0.2)', 'rgba(255,99,123,1)',
                 'rgba(54,162,235,1)',
                 'rgba(255,206,86,1)',
@@ -72,8 +72,9 @@ function GenerateBars(datatodisplay, labelstodisplay)
             }
         }
     })
-    
-  
+
+    console.log(datatodisplay);
+
 }
 
 
@@ -200,7 +201,14 @@ function DisplayCurrentData(PolutionList)
 
 }
 
+function mylog(jsonObj)
+{
+    console.clear();
+    fetch('Export_DataFrame.json').then(results => results.json()).then(console.log);
 
+    console.log(jsonObj);
+
+}
 
 
 function ErrorMessageDB_Connection()
@@ -208,3 +216,100 @@ function ErrorMessageDB_Connection()
     alert("Error no Database Connection");
 
 }
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// DARK MODE Functions And Variables
+
+
+//function ChangeTheme() {
+//    const btn = document.querySelector(".btn-toggle");
+
+//    const currentTheme = localStorage.getItem("theme");
+//    if (currentTheme == "dark") {
+//        document.body.classList.add("dark-theme");
+//    }
+
+//    btn.addEventListener("click", function () {
+//        document.body.classList.toggle("dark-theme");
+
+//        let theme = "light";
+//        if (document.body.classList.contains("dark-theme")) {
+//            theme = "dark";
+//        }
+//        localStorage.setItem("theme", theme);
+//    });
+
+
+
+//}
+
+
+
+
+
+//const moonPath = "M 27.5 0 C 34.791 0 41.79 2.899 46.945 8.055 C 52.101 13.21 55 20.209 55 27.5 C 55 34.791 52.101 41.79 46.945 46.945 C 41.79 52.101 34.791 55 27.5 55 C 20.209 55 13.21 52.101 8.055 46.945 C 2.899 41.79 0 34.791 0 27.5 C 0 20.209 2.899 13.21 8.055 8.055 C 13.21 2.899 20.209 0 27.5 0 Z";
+//const sunPath = "M 27.5 0 C 34.791 0 41.79 2.899 46.945 8.055 C 33.991 9.89 26.93 20.209 26.93 27.5 C 26.93 34.791 33.689 45.261 46.945 46.945 C 41.79 52.101 34.791 55 27.5 55 C 20.209 55 13.21 52.101 8.055 46.945 C 2.899 41.79 0 34.791 0 27.5 C 0 20.209 2.899 13.21 8.055 8.055 C 13.21 2.899 20.209 0 27.5 0 Z";
+//const darkMode = document.querySelector("#dark_mode");
+//let toggle = false;
+////클릭
+
+
+//const rootElement = document.documentElement;
+//const rootElement = document.getElementById("hdrk");
+//rootElement.onclick = darkModeListen();
+
+//function darkModeListen() {
+//    console.clear();
+
+//    rootElement.style = "background: black";
+//    rootElement.style = "background: black";
+
+//    console.log(rootElement.style ="background: black")
+//    //anime.js
+//    //여기에 타임라인을 더한다
+//    const timeline = anime.timeline({
+//        duration: 750,
+//        easing: "easeOutExpo"
+//    });
+//    //add 다르 애니메이션 타임라인에
+//    timeline
+//        .add({
+//            targets: ".moon",
+//            d: [{ value: toggle ? moonPath : sunPath }] //moonPath ->sunpath
+//        })
+//        .add({
+//            targets: darkMode,
+//            rotate: toggle ? 0 : 320
+//        }, "-=350")
+//        .add({
+//            targets: "section",
+//            backgroundColor: toggle ? 'rgba(255,255,255)' : 'rgba(22,22,22)',
+//            color: toggle ? 'rgba(22,22,22)' : 'rgba(255,255,255)'
+//        }, "-=700");
+
+//    if (!toggle) {
+//        toggle = true;
+//        $("h1").text("darkmode")
+//    } else {
+//        toggle = false;
+//        $("h1").text("lightmode")
+//    }
+
+//};
+
+
+//function Dark()
+//{
+//    var btn = document.getElementsByClassName("Theme");
+//    btn.backgroundColor = "#27272f";
+    
+
+//}
+
+
+
