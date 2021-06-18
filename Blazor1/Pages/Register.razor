@@ -1,0 +1,289 @@
+﻿@page "/Register"
+@page "/radiobuttonlist"
+
+@{
+}
+@using System.Data.SqlClient;
+@using Blazor1.Pages
+@using Blazor1.Data
+
+@using ChartJs
+@using System.Collections;
+@using Microsoft.JSInterop
+@using Radzen;
+@using Radzen.Blazor;
+
+@inject IJSRuntime JSRuntime
+
+@code
+{
+    string FirstName;
+    string LastName;
+    string Age;
+    string Role;
+    string UserEmail;
+    string UserPassword;
+}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Form</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/Register.css">
+</head>
+<body id="Regfrm"style="background: linear-gradient(to left, #5ae0e9,#62e0c1,#76e19d ); background-image: url(../images/Flat-Mountains.svg); background-size: 100%; height: 100%; width: 100%; object-fit:cover;" >
+    <RadzenTemplateForm TItem="Model" Data=@model Submit=@OnSubmit InvalidSubmit=@OnInvalidSubmit>
+        <RadzenFieldset Text="Enter email">
+
+            <h1>Sign Up</h1>
+
+
+            <ul class="circles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+
+
+
+            <legend><span class="number">1</span>Your basic info</legend>
+            @*<label for="name">First Name:</label>
+        <input type="text" id="name" name="First_name" value="">
+
+        <label for="name">Last Name:</label>
+        <input type="text" id="Lname" name="Last_name" value="">*@
+            <div class="col-md-5 align-right">
+                <RadzenLabel Text="First Name" />
+            </div>
+            <div class="col">
+                <small style="display: block">(3-10 characters)</small>
+                <RadzenTextBox style="display: block; width:100%;" Name="FirstName" @bind-Value=@model.FirstName />
+                <RadzenLengthValidator Component="FirstName" Min="3" Text="First name should be at least 3 characters" Popup=@popup Style="position: absolute" />
+                <RadzenLengthValidator Component="FirstName" Max="10" Text="First name should be at most 10 characters" Popup=@popup Style="position: absolute" />
+               
+            </div><br />
+
+
+
+            <div class="col-md-5">
+                <RadzenLabel Text="Last Name" />
+
+            </div>
+            <div class="col">
+                <small style="display: block; width: 100%;">(3-10 characters)</small>
+                <RadzenTextBox style="display: block; width: 100%;" Name="LastName" @bind-Value=@model.LastName />
+                <RadzenLengthValidator Component="LastName" Min="3" Text="Last name should be at least 3 characters" Popup=@popup Style="position: absolute" />
+                <RadzenLengthValidator Component="LastName" Max="10" Text="Last name should be at most 10 characters" Popup=@popup Style="position: absolute" />
+            </div>
+
+
+            <div class="col-md-5 align-right">
+                <RadzenLabel Text="Email" />
+            </div>
+            <div class="col">
+                <RadzenTextBox style="display: block" Name="Email" @bind-Value=@model.Email />
+                <RadzenRequiredValidator Component="Email" Text="Email is required" Popup=@popup Style="position: absolute" />
+                <RadzenEmailValidator Component="Email" Text="Provide a valid email address" Popup=@popup Style="position: absolute" />
+            </div>
+
+
+            @*<input type="email" id="mail" name="user_email">*@
+
+            @*<label for="password">Password:</label>
+        <input type="password" id="password" name="user_password">*@
+
+            <div class="col-md-5 align-right">
+                <RadzenLabel Text="Password" />
+            </div>
+            <div class="col">
+                <RadzenPassword style="display: block" Name="Password" @bind-Value=@model.Password />
+                <RadzenRequiredValidator Component="Password" Text="Enter password" Popup="@popup" Style="position: absolute" />
+            </div>
+
+            <div class="row" style="margin-bottom: 48px">
+                <div class="col-md-5">
+                    <RadzenLabel Text="Repeat Password" />
+                </div>
+                <div class="col">
+                    <RadzenPassword style="display: block" Name="RepeatPassword" @bind-Value=@model.RepeatPassword />
+                    <RadzenRequiredValidator Component="RepeatPassword" Text="Repeat your password" Popup=@popup Style="position: absolute" />
+                    <RadzenCompareValidator Visible=@(!string.IsNullOrEmpty(model.RepeatPassword)) Value=@model.Password Component="RepeatPassword" Text="Passwords should be the same" Popup=@popup Style="position: absolute" />
+                </div>
+            </div>
+
+
+
+
+            <label>Age:</label>
+
+            <RadzenRadioButtonList @bind-Value=@value TValue="int" Change=@((args) => OnChange(args, "RadioButtonList with horizontal orientation"))>
+                <Items>
+                    <RadzenRadioButtonListItem Text="under_18" Value="1" />
+                    <RadzenRadioButtonListItem Text="over_18" Value="2" />
+                    <RadzenRadioButtonListItem Text="over_60" Value="3" />
+                </Items>
+            </RadzenRadioButtonList>
+
+
+
+
+            @*<input type="radio" id="under_18" value="under_18" name="user_age"><label for="under_18" class="light">Under 18</label><br>
+        <input type="radio" id="over_18" value="over_18" name="user_age"><label for="over_18" class="light">18 or older</label><br>
+        <input type="radio" id="over_60" value="over_60" name="user_age"><label for="over_60" class="light">60 or older</label>*@
+
+
+
+            <legend><span class="number">2</span>Your profile</legend>
+            <label for="bio">Do you have any allergies:</label>
+            <textarea id="bio" name="user_bio"></textarea>
+
+            <label for="job">Job Role:</label>
+            <select id="job" name="user_job" >
+                <optgroup label="Web" >
+                    <option value="@Role">Resident</option>
+                    <option value="@Role">Manager</option>
+                    @*<option value="@Role">Technitian</option>*@
+                </optgroup>
+              </select>
+
+
+
+
+
+
+            @*<div class="col">
+            <RadzenTextBox style="display: block" Name="Email" @bind-Value=@model.Email />
+            <RadzenRequiredValidator Component="Email" Text="Email is required" Popup=@popup Style="position: absolute" />
+            <RadzenEmailValidator Component="Email" Text="Provide a valid email address" Popup=@popup Style="position: absolute" />
+        </div>*@
+
+            @code
+            {
+                Database_Handler handler = new Database_Handler();
+
+            }
+
+
+            <div class="col">
+                <label>
+                    Display validators as popup
+                    <RadzenCheckBox @bind-Value=@popup></RadzenCheckBox>
+                </label>
+            </div>
+
+            <RadzenButton ButtonType="ButtonType.Submit" Text="Sign Up" @onclick="OnRegister"></RadzenButton>
+
+            <h3>ProgressBar</h3>
+            <RadzenProgressBar @bind-Value="@bvalue" Style="margin-bottom: 20px" />
+            <br />
+        </RadzenFieldset>
+    </RadzenTemplateForm>
+
+
+
+
+
+    @*<a href="../Pages/Index.razor"></a>*@
+
+
+
+</body>
+
+
+
+@{
+    Database_Handler.OpenConn();
+
+
+}
+@code
+            {
+    public double bvalue = 0;
+
+    int value = 1;
+    int? nullableValue = null;
+
+    void OnChange(int? value, string name)
+    {
+        // console.Log($"{name} value changed to {value}");
+
+        Console.WriteLine("hi");
+        if (value == 1)
+        {
+            Age = "under 18";
+
+        }
+        else
+        {
+
+            if (value == 2)
+            {
+                Age = "Over 18";
+            }
+            else
+            {
+
+                Age = "Over 60";
+            }
+        }
+
+    }
+
+
+    class Model
+    {
+
+        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Password { get; set; }
+        public double Value { get; set; }
+        public string RepeatPassword { get; set; }
+
+    }
+
+    bool popup;
+
+    Model model = new Model();
+
+
+    void Log(string eventName, string value)
+    {
+        Console.WriteLine($"{eventName}: {value}");
+    }
+
+    void OnSubmit(Model model)
+    {
+        Log("Submit","true");
+        Log("Submit ", "");
+        bvalue = 100;
+
+    }
+
+    void OnRegister()
+    {
+        handler.Register(model.FirstName, model.LastName,Age , Role, model.Email, model.Password);
+
+
+    }
+
+
+    void OnInvalidSubmit(FormInvalidSubmitEventArgs args)
+    {
+        Log("InvalidSubmit","false");
+        bvalue = 0;
+    }
+
+
+
+
+}

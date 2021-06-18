@@ -1,0 +1,89 @@
+﻿@page "/Settings"
+
+@using Blazor1.Data
+@using Blazor1
+@using Microsoft.JSInterop;
+@using Radzen;
+@using Radzen.Blazor;
+@using MudBlazor;
+@using System.IO;
+@using System.Collections;
+
+@inject IJSRuntime JSRuntime
+
+<body style="height: 100vh; width: 100vw; justify-content: center; align-content: center; align-self: center" class="Theme">
+    <!--https://beta.shapeshifter.design/-->
+    <!--https://codepen.io/thednp/pen/EgVqLw-->
+    <!--https://codepen.io/retsugo/pen/XWmMKgW-->
+    <section style="width:100vw; height:20vh; align-self:center; display:flex; z-index:30;" @onclick="ChangeTheme">
+        <h1 id="hdrk">dark mode</h1>
+        <svg id="dark_mode" width="55" height="55" viewBox="0 0 55 55" xmlns="http://www.w3.org/2000/svg" >
+            <path class="moon" d="M 27.5 0 C 34.791 0 41.79 2.899 46.945 8.055 C 52.101 13.21 55 20.209 55 27.5 C 55 34.791 52.101 41.79 46.945 46.945 C 41.79 52.101 34.791 55 27.5 55 C 20.209 55 13.21 52.101 8.055 46.945 C 2.899 41.79 0 34.791 0 27.5 C 0 20.209 2.899 13.21 8.055 8.055 C 13.21 2.899 20.209 0 27.5 0 Z" fill="#fee140" />
+
+        </svg>
+
+    </section>
+
+
+    <div>
+        <div class="d-inline pa-2 mud-theme-primary">
+            <div class="d-inline pa-2 mud-theme-dark">
+
+                <fieldset>
+
+                    <button class="btn-toggle" id="butt" onclick="AddtoList">Toggle Dark-Mode</button>
+
+
+
+
+
+                </fieldset>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+
+
+@code {
+    bool value;
+    bool disabledValue = true;
+
+    bool disabled = true;
+
+    void OnChange(bool? value, string name)
+    {
+        Console.WriteLine($"{name} value changed to {value}");
+    }
+
+    ArrayList arr = new ArrayList();
+    void AddtoList() 
+    {
+        arr.Add("Dark Mode");
+        arr.Add("Light Mode");
+    }
+    
+}
+
+
+
+@{
+    async Task ChangeTheme()
+    {
+        JSRuntime.InvokeVoidAsync(identifier: "darkModeListen");
+
+        JSRuntime.InvokeVoidAsync(identifier: "Dark");
+
+
+
+
+    }
+
+
+
+
+
+}
